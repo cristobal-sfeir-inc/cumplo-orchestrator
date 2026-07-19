@@ -1,11 +1,14 @@
+"""Router for funding-request distribution endpoints."""
+
 from http import HTTPStatus
 from logging import getLogger
+
+from fastapi import APIRouter, Request
 
 from cumplo_common.database import firestore
 from cumplo_common.integrations.cloud_pubsub import CloudPubSub
 from cumplo_common.models import PrivateEvent
 from cumplo_common.models.funding_request import FundingRequest
-from fastapi import APIRouter, Request
 
 logger = getLogger(__name__)
 

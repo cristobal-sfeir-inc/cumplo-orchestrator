@@ -1,17 +1,17 @@
-# pylint: disable=no-member
+"""FastAPI application entry point — registers middleware, exception handlers, and routers."""
 
 import json
 from http import HTTPStatus
 from logging import CRITICAL, DEBUG, basicConfig, getLogger
 
 import google.cloud.logging
-from cumplo_common.middlewares import PubSubMiddleware
 from fastapi import FastAPI
 from fastapi.encoders import jsonable_encoder
 from fastapi.requests import Request
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
 
+from cumplo_common.middlewares import PubSubMiddleware
 from cumplo_orchestrator.routers import funding_requests
 from cumplo_orchestrator.utils.constants import IS_TESTING, LOG_FORMAT
 

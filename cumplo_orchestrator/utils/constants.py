@@ -1,3 +1,5 @@
+"""Environment-derived constants used across the orchestrator service."""
+
 import os
 
 from dotenv import load_dotenv

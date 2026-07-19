@@ -1,35 +1,41 @@
-include .env
+-include .env
 export
 
-.PHONY: \
-  start \
-  build \
-  down \
-  login \
-  update_common
-
-# Runs linters
+# Verifies code quality — check-only, no fixes (same command as CI)
 .PHONY: lint
 lint:
-	@ruff check --fix
-	@ruff format
-	@mypy --config-file pyproject.toml .
+	@poetry run ruff check --no-fix .
+	@poetry run ruff format --check .
+	@poetry run basedpyright
+	@poetry run docformatter --check --recursive .
 
+# Applies all auto-fixes (ruff + docformatter)
+.PHONY: format
+format:
+	@poetry run ruff format .
+	@poetry run ruff check --fix .
+	@poetry run docformatter --in-place --recursive .
+
+.PHONY: build
 build:
 	@docker-compose build cumplo-orchestrator --build-arg CUMPLO_PYPI_BASE64_KEY=`base64 -i cumplo-pypi-credentials.json`
 
+.PHONY: start
 start:
 	@docker-compose up -d cumplo-orchestrator
 
+.PHONY: down
 down:
 	@docker-compose down
 
 # Activates the project configuration and logs in to gcloud
+.PHONY: login
 login:
 	@gcloud config configurations activate $(PROJECT_ID)
 	@gcloud auth application-default login
 
-update_common:
+.PHONY: update-common
+update-common:
 	@rm -rf .venv
 	@poetry cache clear --no-interaction --all cumplo-pypi
 	@poetry update
