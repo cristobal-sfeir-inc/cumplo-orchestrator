@@ -2,18 +2,26 @@ include .env
 export
 
 .PHONY: \
+  lint \
+  format \
   start \
   build \
   down \
   login \
   update_common
 
-# Runs linters
 .PHONY: lint
 lint:
-	@ruff check --fix
-	@ruff format
-	@mypy --config-file pyproject.toml .
+	@poetry run ruff check .
+	@poetry run ruff format --check .
+	@poetry run basedpyright
+	@poetry run docformatter --check --recursive .
+
+.PHONY: format
+format:
+	@poetry run ruff format .
+	@poetry run ruff check --fix .
+	@poetry run docformatter --in-place --recursive .
 
 build:
 	@docker-compose build cumplo-orchestrator --build-arg CUMPLO_PYPI_BASE64_KEY=`base64 -i cumplo-pypi-credentials.json`

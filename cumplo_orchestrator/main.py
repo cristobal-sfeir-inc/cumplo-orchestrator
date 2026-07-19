@@ -1,4 +1,5 @@
 # pylint: disable=no-member
+"""FastAPI application entry point for cumplo-orchestrator."""
 
 import json
 from http import HTTPStatus

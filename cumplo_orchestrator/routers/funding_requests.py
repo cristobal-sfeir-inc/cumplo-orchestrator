@@ -1,3 +1,5 @@
+"""Router for distributing funding request events to configured user channels."""
+
 from http import HTTPStatus
 from logging import getLogger
 
