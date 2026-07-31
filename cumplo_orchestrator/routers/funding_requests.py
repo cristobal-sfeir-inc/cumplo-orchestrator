@@ -18,7 +18,7 @@ router = APIRouter(prefix="/funding-requests")
 def _filter_funding_requests(_request: Request, payload: list[FundingRequest]) -> None:
     """Distributes the available funding requests event among the users who have configured channels."""
     logger.info(f"Distributing {len(payload)} available funding requests")
-    for user in firestore.client.users.list():
+    for user in firestore.client.users.list():  # pyright: ignore[reportPrivateImportUsage]
         if not user.channels:
             logger.info(f"User {user.id} has no channels configured. Skipping")
             continue
