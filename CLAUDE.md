@@ -35,9 +35,9 @@ confirm the CI gate passes cleanly before pushing.
 - **docformatter** wraps summaries and descriptions at 120 chars; `pre-summary-newline = true`.
 
 ## GitHub Actions
-`.github/workflows/lint.yml` runs `make lint` on every PR and on pushes to `master`. The job
-authenticates to Artifact Registry with WIF (`vars.WIF_PROVIDER` + `vars.PUBLISH_SA` set at
-org level) so that `poetry install` can pull `cumplo-common` from the private registry.
+`.github/workflows/lint.yml` runs `make lint` on every PR. The job authenticates to Artifact
+Registry with WIF (`vars.WIF_PROVIDER` + `vars.READER_SA` set at org level) so that
+`poetry install` can pull `cumplo-common` from the private registry.
 
 ## Gotchas
 - **`cumplo-common` blast radius.** This service depends on every release of `cumplo-common`.
